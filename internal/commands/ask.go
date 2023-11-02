@@ -1,8 +1,10 @@
 package commands
 
 import (
+	"log"
+
 	"github.com/bwmarrin/discordgo"
-	"github.com/cyneptic/cynbot/grammar"
+	"github.com/cyneptic/cynbot/internal/services"
 )
 
 var Ask = &BotCommands{
@@ -19,17 +21,17 @@ var Ask = &BotCommands{
 		},
 	},
 	Handler: func(s *discordgo.Session, i *discordgo.InteractionCreate) {
-		// wrong, correct, err := grammar.Check(i.Message.Interaction)
 		sentence := i.ApplicationCommandData().Options[0].Value.(string)
-		var g grammar.GrammarInterface
-		g = grammar.NewGrammarChecker(sentence)
-
-		g.Check(sentence)
+		service := services.NewAskService(sentence)
+		res, err := service.Process()
+		if err != nil {
+			log.Printf("error from service processor: %s", err.Error())
+		}
 
 		s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 			Type: discordgo.InteractionResponseChannelMessageWithSource,
 			Data: &discordgo.InteractionResponseData{
-				Content: "Basic Hellow",
+				Content: res,
 			},
 		})
 	},

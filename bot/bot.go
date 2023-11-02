@@ -34,8 +34,8 @@ func CreateNewBot(token, guildID string) *Bot {
 		RegisteredCommands: make([]*discordgo.ApplicationCommand, len(commands.Commands)),
 	}
 
-	b.RegisterCommands()
-	b.RegisterHandlers()
+	// b.RegisterCommands()
+	// b.RegisterHandlers()
 
 	return b
 }
