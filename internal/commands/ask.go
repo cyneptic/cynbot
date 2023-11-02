@@ -2,6 +2,7 @@ package commands
 
 import (
 	"log"
+	"time"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/cyneptic/cynbot/internal/services"
@@ -22,17 +23,28 @@ var Ask = &BotCommands{
 	},
 	Handler: func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 		sentence := i.ApplicationCommandData().Options[0].Value.(string)
-		service := services.NewAskService(sentence)
-		res, err := service.Process()
-		if err != nil {
-			log.Printf("error from service processor: %s", err.Error())
-		}
 
 		s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 			Type: discordgo.InteractionResponseChannelMessageWithSource,
 			Data: &discordgo.InteractionResponseData{
-				Content: res,
+				Content: "loading...",
 			},
 		})
+
+		var service services.AskService
+		service = services.NewAskService(sentence)
+		res, err := service.Process()
+		if err != nil {
+			log.Fatalf("error from service processor: %s", err.Error())
+		}
+
+		for err != nil && res != "" {
+			time.Sleep(100 * time.Millisecond)
+		}
+
+		s.InteractionResponseEdit(i.Interaction, &discordgo.WebhookEdit{
+			Content: &res,
+		})
+
 	},
 }

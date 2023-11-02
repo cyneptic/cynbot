@@ -1,5 +1,11 @@
 package services
 
+import (
+	"fmt"
+
+	"github.com/cyneptic/cynbot/utils"
+)
+
 type AskService interface {
 	Process() (string, error)
 }
@@ -13,5 +19,10 @@ func NewAskService(query string) *ask {
 }
 
 func (a *ask) Process() (string, error) {
-	return a.query, nil
+	res, err := utils.GetWholeText(a.query)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	fmt.Println(res)
+	return res, err
 }

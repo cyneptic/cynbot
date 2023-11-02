@@ -25,7 +25,10 @@ func CreateNewBot(token, guildID string) *Bot {
 		fmt.Println("Connected as ", s.State.User.ID)
 	})
 
-	sesh.Open()
+	err = sesh.Open()
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	b := &Bot{
 		S:                  sesh,
@@ -34,8 +37,8 @@ func CreateNewBot(token, guildID string) *Bot {
 		RegisteredCommands: make([]*discordgo.ApplicationCommand, len(commands.Commands)),
 	}
 
-	// b.RegisterCommands()
-	// b.RegisterHandlers()
+	b.RegisterCommands()
+	b.RegisterHandlers()
 
 	return b
 }
@@ -46,6 +49,7 @@ func (b *Bot) RegisterCommands() {
 		if err != nil {
 			log.Panicf("Adding command %v, got error %v", cmd.Command.Name, err)
 		}
+		log.Printf("adding command %v", cmd.Command.Name)
 		b.RegisteredCommands = append(b.RegisteredCommands, c)
 	}
 }
