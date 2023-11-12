@@ -14,4 +14,5 @@ type BotCommands struct {
 var Commands = map[string]*BotCommands{
 	"bitch":   Ask,
 	"grammar": Grammar,
+	"correct": Correct,
 }

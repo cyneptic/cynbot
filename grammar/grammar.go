@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"os"
 )
 
 type GrammarInterface interface {
@@ -24,7 +23,7 @@ type GrammarChecker struct {
 }
 
 func NewGrammarChecker(sentence string) *GrammarChecker {
-	uid, token := os.Getenv("API_USERID"), os.Getenv("API_TOKEN")
+	uid, token := "FyJqu7op3asCFv0D", "12050"
 	println(uid, token)
 	address := fmt.Sprintf("https://www.stands4.com/services/v2/grammar.php?uid=%s&tokenid=%s&text=%s&format=json", uid, token, url.QueryEscape(sentence))
 

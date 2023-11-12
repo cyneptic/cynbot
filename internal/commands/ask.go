@@ -45,6 +45,5 @@ var Ask = &BotCommands{
 		s.InteractionResponseEdit(i.Interaction, &discordgo.WebhookEdit{
 			Content: &res,
 		})
-
 	},
 }
