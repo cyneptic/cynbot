@@ -14,8 +14,8 @@ func main() {
 		panic(err)
 	}
 
-	t := "MTE1MzMxNTUzODUyOTk2NDAzMg.GOVtZM.gyAobrDBt3ZKxQOsyABfRzwM0PfhPtkPqngxrk"
-	gid := "1042387296613322763"
+	t := os.Getenv("TOKEN_BOT")
+	gid := os.Getenv("ID_GUILD")
 
 	b := bot.CreateNewBot(t, gid)
 	defer b.S.Close()

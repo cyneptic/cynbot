@@ -11,8 +11,8 @@ import (
 
 var Correct = &BotCommands{
 	Command: &discordgo.ApplicationCommand{
-		Name:        "bitch",
-		Description: "Ask a query from bitch",
+		Name:        "correct",
+		Description: "Check if something is grammatically correct and receive suggestions",
 		Options: []*discordgo.ApplicationCommandOption{
 			{
 				Type:        discordgo.ApplicationCommandOptionString,
